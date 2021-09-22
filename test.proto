@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package fiot;
+
+service FIOT {
+    rpc Simple(Param) returns (Res) {}
+    rpc StreamResp(Param) returns (stream Res) {}
+    rpc StreamReq(stream Param) returns (Res) {}
+    rpc BiStream(stream Param) returns (stream Res) {}
+}
+
+message Param {
+    int32 x = 1;
+    int32 y = 2;
+    int32 z = 3;
+    enum Cond {
+        NONE = 0;
+        MIN = 1;
+        MAX = 2;
+    }
+    Cond cond = 4;
+}
+
+message Res {
+    int32 value = 1;
+    enum Tag {
+        SUCCESS = 0;
+        WARNING = 1;
+        FAILED = 2;
+    }
+    repeated Tag tags = 2;
+}

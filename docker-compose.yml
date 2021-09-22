@@ -1,0 +1,21 @@
+version: "3"
+services:
+  server:
+    container_name: grpc-sample-server
+    image: mchiu2006/grpc-sample-server
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: server
+    # environment:
+    # - IN_CONTAINER=true
+  proxy:
+    container_name: grpc-envoy-proxy
+    image: mchiu2006/grpc-envoy-server
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: proxy
+    ports:
+      - 9901:9901
+      - 8090:8090
